@@ -22,6 +22,10 @@ func Sum[K int | float64](arr []K) K {
 	return sum
 }
 
+func Last[T any](slice []T) T {
+	return slice[len(slice)-1]
+}
+
 func ToText(i int) string {
 	switch i {
 	case 0:
