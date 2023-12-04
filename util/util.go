@@ -22,6 +22,14 @@ func Sum[K int | float64](arr []K) K {
 	return sum
 }
 
+func Map[K any, T any](arr []K, f func(K) T) []T {
+	var out []T
+	for _, v := range arr {
+		out = append(out, f(v))
+	}
+	return out
+}
+
 func Last[T any](slice []T) T {
 	return slice[len(slice)-1]
 }
