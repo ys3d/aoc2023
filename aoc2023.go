@@ -6,13 +6,14 @@ import (
 	"daniel/aoc2023/day2"
 	"daniel/aoc2023/day3"
 	"daniel/aoc2023/day4"
+	"daniel/aoc2023/day5"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 )
 
-const Day = 0
+const Day = 5
 
 func main() {
 	fmt.Println("AOC 2023")
@@ -40,6 +41,7 @@ func main() {
 		runDay2()
 		runDay3()
 		runDay4()
+		runDay5()
 	case 1:
 		runDay1()
 	case 2:
@@ -48,6 +50,8 @@ func main() {
 		runDay3()
 	case 4:
 		runDay4()
+	case 5:
+		runDay5()
 	default:
 		fmt.Println("Day does not exist")
 	}
@@ -107,5 +111,19 @@ func runDay4() {
 	out = day4.N2("day4/test2.txt")
 	fmt.Println("--> Solution for Test: ", out)
 	out = day4.N2("day4/input.txt")
+	fmt.Println("--> Solution for Input: ", out)
+}
+
+func runDay5() {
+	fmt.Println("######### Day 5 Ex 1 ##########")
+	out := day5.N1("day5/test.txt")
+	fmt.Println("--> Solution for Test: ", out)
+	out = day5.N1("day5/input.txt")
+	fmt.Println("--> Solution for Input: ", out)
+
+	fmt.Println("######### Day 5 Ex 2 ##########")
+	out = day5.N2("day5/test.txt")
+	fmt.Println("--> Solution for Test: ", out)
+	out = day5.N2("day5/input.txt")
 	fmt.Println("--> Solution for Input: ", out)
 }

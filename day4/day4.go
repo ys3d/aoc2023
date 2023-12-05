@@ -40,20 +40,6 @@ func N2(file string) (out string) {
 		g.parseFromLine(l)
 		games = append(games, g)
 	}
-
-	/*i := 0
-	oldLen := len(games)
-	for i < len(games) {
-		n := games[i].matchingNumbers()
-		for n > 0 {
-			cIndex := games[i].index + n - 1
-			if cIndex < oldLen {
-				games = append(games, games[cIndex])
-				n -= 1
-			}
-		}
-		i++
-	}*/
 	i := len(games) - 1
 	for i >= 0 {
 		n := games[i].matchingNumbers()
