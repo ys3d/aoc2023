@@ -30,6 +30,15 @@ func Map[K any, T any](arr []K, f func(K) T) []T {
 	return out
 }
 
+func Filter[K any](arr []K, f func(K) bool) (k []K) {
+	for _, v := range arr {
+		if f(v) {
+			k = append(k, v)
+		}
+	}
+	return
+}
+
 func Last[T any](slice []T) T {
 	return slice[len(slice)-1]
 }
