@@ -69,38 +69,45 @@ func main() {
 }
 
 func runDay1() {
-	runAndPrint(day1.N1, []string{"day1/test1.txt", "day1/input.txt"}, "1", "1")
-	runAndPrint(day1.N2, []string{"day1/test2.txt", "day1/input.txt"}, "1", "2")
+	f := getFilesIn("day1/")
+	runAndPrint(day1.N1, f, "1", "1")
+	runAndPrint(day1.N2, f, "1", "2")
 }
 
 func runDay2() {
-	runAndPrint(day2.N1, []string{"day2/test1.txt", "day2/input.txt"}, "2", "1")
-	runAndPrint(day2.N2, []string{"day2/test2.txt", "day2/input.txt"}, "2", "2")
+	f := getFilesIn("day2/")
+	runAndPrint(day2.N1, f, "2", "1")
+	runAndPrint(day2.N2, f, "2", "2")
 }
 
 func runDay3() {
-	runAndPrint(day3.N1, []string{"day3/test1.txt", "day3/input.txt"}, "3", "1")
-	runAndPrint(day3.N2, []string{"day3/test2.txt", "day3/input.txt"}, "3", "2")
+	f := getFilesIn("day3/")
+	runAndPrint(day3.N1, f, "3", "1")
+	runAndPrint(day3.N2, f, "3", "2")
 }
 
 func runDay4() {
-	runAndPrint(day4.N1, []string{"day4/test1.txt", "day4/input.txt"}, "4", "1")
-	runAndPrint(day4.N2, []string{"day4/test2.txt", "day4/input.txt"}, "4", "2")
+	f := getFilesIn("day4/")
+	runAndPrint(day4.N1, f, "4", "1")
+	runAndPrint(day4.N2, f, "4", "2")
 }
 
 func runDay5() {
-	runAndPrint(day5.N1, []string{"day5/test.txt", "day5/input.txt"}, "5", "1")
-	runAndPrint(day5.N2, []string{"day5/test.txt", "day5/input.txt"}, "5", "2")
+	f := getFilesIn("day5/")
+	runAndPrint(day5.N1, f, "5", "1")
+	runAndPrint(day5.N2, f, "5", "2")
 }
 
 func runDay6() {
-	runAndPrint(day6.N1, []string{"day6/test.txt", "day6/input.txt"}, "6", "1")
-	runAndPrint(day6.N2, []string{"day6/test.txt", "day6/input.txt"}, "6", "2")
+	f := getFilesIn("day6/")
+	runAndPrint(day6.N1, f, "6", "1")
+	runAndPrint(day6.N2, f, "6", "2")
 }
 
 func runDay7() {
-	runAndPrint(day7.N1, []string{"day7/test.txt", "day7/input.txt"}, "7", "1")
-	runAndPrint(day7.N2, []string{"day7/test.txt", "day7/input.txt"}, "7", "2")
+	f := getFilesIn("day7/")
+	runAndPrint(day7.N1, f, "7", "1")
+	runAndPrint(day7.N2, f, "7", "2")
 }
 
 type run struct {
@@ -141,4 +148,15 @@ func printRuns() {
 	t.SetStyle(table.StyleColoredDark)
 	t.Style().Title.Align = text.AlignCenter
 	t.Render()
+}
+
+func getFilesIn(s string) (out []string) {
+	f, _ := os.Open(s)
+	files, _ := f.Readdir(0)
+	for _, f := range files {
+		if strings.Contains(f.Name(), ".txt") {
+			out = append(out, s+f.Name())
+		}
+	}
+	return
 }
