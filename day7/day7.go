@@ -76,46 +76,31 @@ func (c *chars) zeroJ() (c2 chars) {
 }
 
 func (c *chars) numberOfGroupsOf(size int) (n int) {
-	if c.a == size {
-		n++
-	}
-	if c.k == size {
-		n++
-	}
-	if c.q == size {
-		n++
-	}
-	if c.j == size {
-		n++
-	}
-	if c.t == size {
-		n++
-	}
-	if c.nine == size {
-		n++
-	}
-	if c.eight == size {
-		n++
-	}
-	if c.seven == size {
-		n++
-	}
-	if c.six == size {
-		n++
-	}
-	if c.five == size {
-		n++
-	}
-	if c.four == size {
-		n++
-	}
-	if c.three == size {
-		n++
-	}
-	if c.two == size {
-		n++
-	}
+	n = util.Sum(util.Map(c.toSlice(), func(i int) int {
+		if i == size {
+			return 1
+		}
+		return 0
+	}))
 	return
+}
+
+func (c *chars) toSlice() []int {
+	return []int{
+		c.a,
+		c.k,
+		c.q,
+		c.j,
+		c.t,
+		c.nine,
+		c.eight,
+		c.seven,
+		c.six,
+		c.five,
+		c.four,
+		c.three,
+		c.two,
+	}
 }
 
 type hand struct {
