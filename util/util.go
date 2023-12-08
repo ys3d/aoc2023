@@ -1,6 +1,7 @@
 package util
 
 import (
+	"github.com/fxtlabs/primes"
 	"os"
 	"strings"
 )
@@ -68,4 +69,16 @@ func ToText(i int) string {
 	default:
 		return ""
 	}
+}
+
+func PrimeFactors(i int) (out []int) {
+	primesSelection := primes.Sieve(i)
+	for _, p := range primesSelection {
+		li := i
+		for li%p == 0 {
+			out = append(out, p)
+			li /= p
+		}
+	}
+	return
 }
