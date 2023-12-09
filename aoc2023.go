@@ -10,6 +10,7 @@ import (
 	"daniel/aoc2023/day6"
 	"daniel/aoc2023/day7"
 	"daniel/aoc2023/day8"
+	"daniel/aoc2023/day9"
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
@@ -50,6 +51,7 @@ func main() {
 		runDay6()
 		runDay7()
 		runDay8()
+		runDay9()
 	case 1:
 		runDay1()
 	case 2:
@@ -66,6 +68,8 @@ func main() {
 		runDay7()
 	case 8:
 		runDay8()
+	case 9:
+		runDay9()
 	default:
 		fmt.Println("Day does not exist")
 	}
@@ -119,6 +123,12 @@ func runDay8() {
 	f2 := getFilesIn("day8/inputPart2/")
 	runAndPrint(day8.N1, f1, "8", "1")
 	runAndPrint(day8.N2, f2, "8", "2")
+}
+
+func runDay9() {
+	f := getFilesIn("day9/")
+	runAndPrint(day9.N1, f, "9", "1")
+	runAndPrint(day9.N2, f, "9", "2")
 }
 
 type run struct {
