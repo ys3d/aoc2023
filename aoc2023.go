@@ -2,15 +2,16 @@ package main
 
 import (
 	"bufio"
-	"daniel/aoc2023/day1"
-	"daniel/aoc2023/day2"
-	"daniel/aoc2023/day3"
-	"daniel/aoc2023/day4"
-	"daniel/aoc2023/day5"
-	"daniel/aoc2023/day6"
-	"daniel/aoc2023/day7"
-	"daniel/aoc2023/day8"
-	"daniel/aoc2023/day9"
+	"daniel/aoc2023/day01"
+	"daniel/aoc2023/day02"
+	"daniel/aoc2023/day03"
+	"daniel/aoc2023/day04"
+	"daniel/aoc2023/day05"
+	"daniel/aoc2023/day06"
+	"daniel/aoc2023/day07"
+	"daniel/aoc2023/day08"
+	"daniel/aoc2023/day09"
+	"daniel/aoc2023/day10"
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
@@ -52,6 +53,7 @@ func main() {
 		runDay7()
 		runDay8()
 		runDay9()
+		runDay10()
 	case 1:
 		runDay1()
 	case 2:
@@ -70,6 +72,8 @@ func main() {
 		runDay8()
 	case 9:
 		runDay9()
+	case 10:
+		runDay10()
 	default:
 		fmt.Println("Day does not exist")
 	}
@@ -77,58 +81,64 @@ func main() {
 }
 
 func runDay1() {
-	f := getFilesIn("day1/")
-	runAndPrint(day1.N1, f, "1", "1")
-	runAndPrint(day1.N2, f, "1", "2")
+	f := getFilesIn("day01/")
+	runAndPrint(day01.N1, f, "1", "1")
+	runAndPrint(day01.N2, f, "1", "2")
 }
 
 func runDay2() {
-	f := getFilesIn("day2/")
-	runAndPrint(day2.N1, f, "2", "1")
-	runAndPrint(day2.N2, f, "2", "2")
+	f := getFilesIn("day02/")
+	runAndPrint(day02.N1, f, "2", "1")
+	runAndPrint(day02.N2, f, "2", "2")
 }
 
 func runDay3() {
-	f := getFilesIn("day3/")
-	runAndPrint(day3.N1, f, "3", "1")
-	runAndPrint(day3.N2, f, "3", "2")
+	f := getFilesIn("day03/")
+	runAndPrint(day03.N1, f, "3", "1")
+	runAndPrint(day03.N2, f, "3", "2")
 }
 
 func runDay4() {
-	f := getFilesIn("day4/")
-	runAndPrint(day4.N1, f, "4", "1")
-	runAndPrint(day4.N2, f, "4", "2")
+	f := getFilesIn("day04/")
+	runAndPrint(day04.N1, f, "4", "1")
+	runAndPrint(day04.N2, f, "4", "2")
 }
 
 func runDay5() {
-	f := getFilesIn("day5/")
-	runAndPrint(day5.N1, f, "5", "1")
-	runAndPrint(day5.N2, f, "5", "2")
+	f := getFilesIn("day05/")
+	runAndPrint(day05.N1, f, "5", "1")
+	runAndPrint(day05.N2, f, "5", "2")
 }
 
 func runDay6() {
-	f := getFilesIn("day6/")
-	runAndPrint(day6.N1, f, "6", "1")
-	runAndPrint(day6.N2, f, "6", "2")
+	f := getFilesIn("day06/")
+	runAndPrint(day06.N1, f, "6", "1")
+	runAndPrint(day06.N2, f, "6", "2")
 }
 
 func runDay7() {
-	f := getFilesIn("day7/")
-	runAndPrint(day7.N1, f, "7", "1")
-	runAndPrint(day7.N2, f, "7", "2")
+	f := getFilesIn("day07/")
+	runAndPrint(day07.N1, f, "7", "1")
+	runAndPrint(day07.N2, f, "7", "2")
 }
 
 func runDay8() {
-	f1 := getFilesIn("day8/inputPart1/")
-	f2 := getFilesIn("day8/inputPart2/")
-	runAndPrint(day8.N1, f1, "8", "1")
-	runAndPrint(day8.N2, f2, "8", "2")
+	f1 := getFilesIn("day08/inputPart1/")
+	f2 := getFilesIn("day08/inputPart2/")
+	runAndPrint(day08.N1, f1, "8", "1")
+	runAndPrint(day08.N2, f2, "8", "2")
 }
 
 func runDay9() {
-	f := getFilesIn("day9/")
-	runAndPrint(day9.N1, f, "9", "1")
-	runAndPrint(day9.N2, f, "9", "2")
+	f := getFilesIn("day09/")
+	runAndPrint(day09.N1, f, "9", "1")
+	runAndPrint(day09.N2, f, "9", "2")
+}
+
+func runDay10() {
+	f := getFilesIn("day10/")
+	runAndPrint(day10.N1, f, "10", "1")
+	runAndPrint(day10.N2, f, "10", "2")
 }
 
 type run struct {

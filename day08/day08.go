@@ -1,4 +1,4 @@
-package day8
+package day08
 
 import (
 	"daniel/aoc2023/util"
