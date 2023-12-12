@@ -19,6 +19,7 @@ import (
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
+	"runtime/pprof"
 	"slices"
 	"strconv"
 	"strings"
@@ -26,15 +27,32 @@ import (
 	"time"
 )
 
-const Day = 0
-
 var jobs []job
-
-//var runs []run
+var threadProfile = pprof.Lookup("threadcreate")
 
 func main() {
-	localDay := Day
-	if localDay == -1 {
+	day := readDay()
+	scheduleDays(day)
+	fmt.Println("Scheduled", len(jobs), "jobs for execution")
+	start := time.Now()
+	printRuns(runScheduled(true))
+	elapsed := time.Since(start)
+	fmt.Println("Execution took", elapsed)
+	fmt.Println("Used threads:", threadProfile.Count())
+
+}
+
+func readDay() (day int) {
+	day = -1
+	if len(os.Args) == 2 {
+		v, err := strconv.Atoi(os.Args[1])
+		if err != nil {
+			fmt.Println("Unknown argument", os.Args[1])
+		} else {
+			day = v
+		}
+	}
+	if day == -1 {
 		fmt.Println("Please select the day:")
 		reader := bufio.NewReader(os.Stdin)
 		// ReadString will block until the delimiter is entered
@@ -46,129 +64,128 @@ func main() {
 
 		// remove the delimiter from the string
 		input = strings.TrimSuffix(input, "\n")
-		localDay, err = strconv.Atoi(input)
+		day, err = strconv.Atoi(input)
 		if err != nil {
-			localDay = -1
+			fmt.Println("Unknown day", input)
+			day = -1
 		}
 	}
+	return
+}
+
+func scheduleDays(day int) {
 	fmt.Println("Scheduling")
-	switch localDay {
+	switch day {
 	case 0:
-		runDay1()
-		runDay2()
-		runDay3()
-		runDay4()
-		runDay5()
-		runDay6()
-		runDay7()
-		runDay8()
-		runDay9()
-		runDay10()
-		runDay11()
-		runDay12()
+		scheduleDay1()
+		scheduleDay2()
+		scheduleDay3()
+		scheduleDay4()
+		scheduleDay5()
+		scheduleDay6()
+		scheduleDay7()
+		scheduleDay8()
+		scheduleDay9()
+		scheduleDay10()
+		scheduleDay11()
+		scheduleDay12()
 	case 1:
-		runDay1()
+		scheduleDay1()
 	case 2:
-		runDay2()
+		scheduleDay2()
 	case 3:
-		runDay3()
+		scheduleDay3()
 	case 4:
-		runDay4()
+		scheduleDay4()
 	case 5:
-		runDay5()
+		scheduleDay5()
 	case 6:
-		runDay6()
+		scheduleDay6()
 	case 7:
-		runDay7()
+		scheduleDay7()
 	case 8:
-		runDay8()
+		scheduleDay8()
 	case 9:
-		runDay9()
+		scheduleDay9()
 	case 10:
-		runDay10()
+		scheduleDay10()
 	case 11:
-		runDay11()
+		scheduleDay11()
 	case 12:
-		runDay12()
+		scheduleDay12()
 	default:
 		fmt.Println("Day does not exist")
 	}
-	fmt.Println("Scheduled ", len(jobs), " jobs for execution")
-	start := time.Now()
-	printRuns(runScheduled(true))
-	elapsed := time.Since(start)
-	fmt.Println("Execution took ", elapsed)
-
 }
 
-func runDay1() {
+func scheduleDay1() {
 	f := getFilesIn("day01/")
 	schedule(day01.N1, f, 1, 1)
 	schedule(day01.N2, f, 1, 1)
 }
 
-func runDay2() {
+func scheduleDay2() {
 	f := getFilesIn("day02/")
 	schedule(day02.N1, f, 2, 1)
 	schedule(day02.N2, f, 2, 2)
 }
 
-func runDay3() {
+func scheduleDay3() {
 	f := getFilesIn("day03/")
 	schedule(day03.N1, f, 3, 1)
 	schedule(day03.N2, f, 3, 2)
 }
 
-func runDay4() {
+func scheduleDay4() {
 	f := getFilesIn("day04/")
 	schedule(day04.N1, f, 4, 1)
 	schedule(day04.N2, f, 4, 2)
 }
 
-func runDay5() {
+func scheduleDay5() {
 	f := getFilesIn("day05/")
 	schedule(day05.N1, f, 5, 1)
 	schedule(day05.N2, f, 5, 2)
 }
 
-func runDay6() {
+func scheduleDay6() {
 	f := getFilesIn("day06/")
 	schedule(day06.N1, f, 6, 1)
 	schedule(day06.N2, f, 6, 2)
 }
 
-func runDay7() {
+func scheduleDay7() {
 	f := getFilesIn("day07/")
 	schedule(day07.N1, f, 7, 1)
 	schedule(day07.N2, f, 7, 2)
 }
 
-func runDay8() {
+func scheduleDay8() {
 	f1 := getFilesIn("day08/inputPart1/")
 	f2 := getFilesIn("day08/inputPart2/")
 	schedule(day08.N1, f1, 8, 1)
 	schedule(day08.N2, f2, 8, 2)
 }
 
-func runDay9() {
+func scheduleDay9() {
 	f := getFilesIn("day09/")
 	schedule(day09.N1, f, 9, 1)
 	schedule(day09.N2, f, 9, 2)
 }
 
-func runDay10() {
+func scheduleDay10() {
 	f := getFilesIn("day10/")
 	schedule(day10.N1, f, 10, 1)
 	schedule(day10.N2, f, 10, 2)
 }
 
-func runDay11() {
+func scheduleDay11() {
 	f := getFilesIn("day11/")
 	schedule(day11.N1, f, 11, 1)
 	schedule(day11.N2, f, 11, 2)
 }
 
-func runDay12() {
+func scheduleDay12() {
 	f := getFilesIn("day12/")
 	schedule(day12.N1, f, 12, 1)
 	schedule(day12.N2, f, 12, 2)
@@ -183,6 +200,7 @@ type job struct {
 }
 
 func runJob(j job, ch chan run, wg *sync.WaitGroup) {
+	defer wg.Done()
 	start := time.Now()
 	out := j.f(j.in)
 	elapsed := time.Since(start)
@@ -193,7 +211,6 @@ func runJob(j job, ch chan run, wg *sync.WaitGroup) {
 		out,
 		elapsed,
 	}
-	wg.Done()
 }
 
 type run struct {
