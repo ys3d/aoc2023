@@ -1,20 +1,12 @@
 package day11
 
 import (
-	"daniel/aoc2023/util"
-	"fmt"
 	"math"
-	"strconv"
 	"strings"
 )
 
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	g := build(in, 2)
 	sum := 0
 	for i, g1 := range g {
@@ -22,16 +14,11 @@ func N1(file string) (out string) {
 			sum += g1.dist(g[j])
 		}
 	}
-	return strconv.Itoa(sum)
+	return sum
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
 	g := build(in, 1000000)
 	sum := 0
 	for i, g1 := range g {
@@ -39,7 +26,7 @@ func N2(file string) (out string) {
 			sum += g1.dist(g[j])
 		}
 	}
-	return strconv.Itoa(sum)
+	return sum
 }
 
 type galaxy struct {

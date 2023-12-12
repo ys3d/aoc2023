@@ -2,19 +2,12 @@ package day10
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"github.com/dominikbraun/graph"
-	"strconv"
 	"strings"
 )
 
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	in = append([]string{strings.Repeat(".", len(in[0]))}, in...)
 	in = append(in, strings.Repeat(".", len(in[0])))
 	for i := 0; i < len(in); i++ {
@@ -27,16 +20,11 @@ func N1(file string) (out string) {
 		d++
 		return d != 1 && value == vertexIndex(x, y, len(in[0]))
 	})
-	return strconv.Itoa(d / 2)
+	return d / 2
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
 	in = append([]string{strings.Repeat(".", len(in[0]))}, in...)
 	in = append(in, strings.Repeat(".", len(in[0])))
 	for i := 0; i < len(in); i++ {
@@ -70,7 +58,7 @@ func N2(file string) (out string) {
 			}
 		}
 	}
-	return strconv.Itoa(count)
+	return count
 }
 
 func cleanup(lines []string) (out []string) {

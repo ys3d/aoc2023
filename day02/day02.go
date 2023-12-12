@@ -2,17 +2,11 @@ package day02
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	var games []game
 	for _, l := range in {
 		g := game{}
@@ -29,16 +23,11 @@ func N1(file string) (out string) {
 			sum += g.index
 		}
 	}
-	return strconv.Itoa(sum)
+	return sum
 
 }
 
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
 	var games []game
 	for _, l := range in {
 		g := game{}
@@ -50,7 +39,7 @@ func N2(file string) (out string) {
 	for _, g := range games {
 		sum += g.red * g.green * g.blue
 	}
-	return strconv.Itoa(sum)
+	return sum
 }
 
 type game struct {

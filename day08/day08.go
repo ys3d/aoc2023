@@ -2,19 +2,12 @@ package day08
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"slices"
-	"strconv"
 	"strings"
 )
 
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	inst, nodes := parseGame(in)
 	ni := slices.IndexFunc(nodes, func(n node) bool {
 		return n.name == "AAA"
@@ -34,17 +27,12 @@ func N1(file string) (out string) {
 		}
 	}
 
-	return strconv.Itoa(steps)
+	return steps
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
+func N2(in []string) int {
 	// Assumption the path length from the start to Z is equal to the length from Z to Z
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 	inst, nodes := parseGame(in)
 
 	starts := util.Filter(nodes, func(n node) bool {
@@ -98,7 +86,7 @@ func N2(file string) (out string) {
 			res *= k
 		}
 	}
-	return strconv.Itoa(res)
+	return res
 }
 
 type instruction struct {

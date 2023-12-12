@@ -2,37 +2,25 @@ package day01
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
 	"unicode"
 )
 
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	n := getNumbers(in)
-	return strconv.Itoa(util.Sum(n))
+	return util.Sum(n)
 
 }
 
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
+func N2(in []string) int {
 	var newIn []string
 	for _, line := range in {
 		newIn = append(newIn, parseLine(line))
 	}
 	n := getNumbers(newIn)
-	return strconv.Itoa(util.Sum(n))
+	return util.Sum(n)
 }
 
 func getNumbers(in []string) (out []int) {

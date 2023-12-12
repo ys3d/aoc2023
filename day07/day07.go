@@ -2,55 +2,42 @@ package day07
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"slices"
 	"sort"
 	"strconv"
 	"strings"
 )
 
-var order []string
-
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	order = []string{"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"}
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
+	order := []string{"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"}
 	hands := util.Map(in, func(s string) (h hand) {
 		h.fromLine(s)
 		return
 	})
-	hands = sortByRank(hands, false)
+	hands = sortByRank(hands, false, order)
 	score := 0
 	for i, h := range hands {
 		score += (i + 1) * h.bid
 	}
 
-	return strconv.Itoa(score)
+	return score
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
-	order = []string{"A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"}
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
+	order := []string{"A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"}
 	hands := util.Map(in, func(s string) (h hand) {
 		h.fromLine(s)
 		return
 	})
-	hands = sortByRank(hands, true)
+	hands = sortByRank(hands, true, order)
 	score := 0
 	for i, h := range hands {
 		score += (i + 1) * h.bid
 	}
 
-	return strconv.Itoa(score)
+	return score
 }
 
 type chars struct {
@@ -130,9 +117,9 @@ func (h *hand) fromLine(s string) {
 	h.c = c
 }
 
-func sortByRank(hs []hand, enableJoker bool) []hand {
+func sortByRank(hs []hand, enableJoker bool, order []string) []hand {
 	sort.SliceStable(hs, func(i, j int) bool {
-		return hs[i].comp(hs[j], enableJoker)
+		return hs[i].comp(hs[j], enableJoker, order)
 	})
 	return hs
 }
@@ -175,7 +162,7 @@ func (h *hand) kind(enableJoker bool) int {
 	return 1
 }
 
-func (h *hand) comp(h2 hand, enableJoker bool) bool {
+func (h *hand) comp(h2 hand, enableJoker bool, order []string) bool {
 	k1 := h.kind(enableJoker)
 	k2 := h2.kind(enableJoker)
 	if k1 < k2 {
@@ -186,7 +173,7 @@ func (h *hand) comp(h2 hand, enableJoker bool) bool {
 	}
 	for i := range h.cards {
 		if h.cards[i:i+1] != h2.cards[i:i+1] {
-			charComp := charRank(h.cards[i:i+1]) > charRank(h2.cards[i:i+1])
+			charComp := charRank(h.cards[i:i+1], order) > charRank(h2.cards[i:i+1], order)
 			return charComp
 		}
 	}
@@ -194,7 +181,7 @@ func (h *hand) comp(h2 hand, enableJoker bool) bool {
 
 }
 
-func charRank(s string) int {
+func charRank(s string, order []string) int {
 	return slices.Index(order, s)
 }
 

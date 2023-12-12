@@ -2,19 +2,12 @@ package day04
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
 )
 
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
+func N1(in []string) int {
 	var games []game
 
 	for _, l := range in {
@@ -23,16 +16,10 @@ func N1(file string) (out string) {
 		games = append(games, g)
 	}
 
-	return strconv.Itoa(util.Sum(util.Map(games, func(g game) int { return g.worth() })))
+	return util.Sum(util.Map(games, func(g game) int { return g.worth() }))
 }
 
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
+func N2(in []string) int {
 	var games []game
 
 	for _, l := range in {
@@ -52,7 +39,7 @@ func N2(file string) (out string) {
 		i--
 	}
 
-	return strconv.Itoa(util.Sum(util.Map(games, func(g game) int { return g.cards })))
+	return util.Sum(util.Map(games, func(g game) int { return g.cards }))
 }
 
 type game struct {

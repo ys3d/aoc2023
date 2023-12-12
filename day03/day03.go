@@ -2,19 +2,12 @@ package day03
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"regexp"
-	"strconv"
 	"strings"
 	"unicode"
 )
 
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	emptyLine := strings.Repeat(".", len(in[0]))
 	in = append([]string{emptyLine}, in...)
 	in = append(in, emptyLine)
@@ -27,17 +20,11 @@ func N1(file string) (out string) {
 	}
 	//fmt.Println(numbers)
 
-	return strconv.Itoa(util.Sum(numbers))
+	return util.Sum(numbers)
 
 }
 
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
+func N2(in []string) int {
 	emptyLine := strings.Repeat(".", len(in[0]))
 	in = append([]string{emptyLine}, in...)
 	in = append(in, emptyLine)
@@ -60,7 +47,7 @@ func N2(file string) (out string) {
 		}
 	}
 
-	return strconv.Itoa(util.Sum(ratios))
+	return util.Sum(ratios)
 }
 
 func findNumber(lines []string) []int {

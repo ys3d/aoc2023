@@ -2,19 +2,13 @@ package day05
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
 )
 
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	seeds, soil, fertilizer, water, light, temp, humidity, location := parseGame(in)
 	pos := apply(seeds, soil)
 	pos = apply(pos, fertilizer)
@@ -24,16 +18,11 @@ func N1(file string) (out string) {
 	pos = apply(pos, humidity)
 	pos = apply(pos, location)
 
-	return strconv.Itoa(slices.Min(pos))
+	return slices.Min(pos)
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
 	seeds, soil, fertilizer, water, light, temp, humidity, location := parseGameInterval(in)
 	pos := applyInterval(seeds, soil)
 	pos = applyInterval(pos, fertilizer)
@@ -43,9 +32,9 @@ func N2(file string) (out string) {
 	pos = applyInterval(pos, humidity)
 	pos = applyInterval(pos, location)
 
-	return strconv.Itoa(slices.Min(util.Map(pos, func(i Interval) int {
+	return slices.Min(util.Map(pos, func(i Interval) int {
 		return i.start
-	})))
+	}))
 }
 
 // Interval represents an interval.

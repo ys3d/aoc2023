@@ -14,12 +14,15 @@ import (
 	"daniel/aoc2023/day10"
 	"daniel/aoc2023/day11"
 	"daniel/aoc2023/day12"
+	"daniel/aoc2023/util"
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -48,6 +51,7 @@ func main() {
 			localDay = -1
 		}
 	}
+	fmt.Println("Scheduling")
 	switch localDay {
 	case 0:
 		runDay1()
@@ -89,7 +93,12 @@ func main() {
 	default:
 		fmt.Println("Day does not exist")
 	}
-	printRuns(runScheduled())
+	fmt.Println("Scheduled ", len(jobs), " jobs for execution")
+	start := time.Now()
+	printRuns(runScheduled(true))
+	elapsed := time.Since(start)
+	fmt.Println("Execution took ", elapsed)
+
 }
 
 func runDay1() {
@@ -166,45 +175,84 @@ func runDay12() {
 }
 
 type job struct {
-	f    func(string) string
+	f    func([]string) int
 	file string
+	in   []string
 	day  int
 	ex   int
 }
 
-func (j *job) run() run {
+func runJob(j job, ch chan run, wg *sync.WaitGroup) {
 	start := time.Now()
-	out := j.f(j.file)
+	out := j.f(j.in)
 	elapsed := time.Since(start)
-	return run{
-		strconv.Itoa(j.day),
-		strconv.Itoa(j.ex),
+	ch <- run{
+		j.day,
+		j.ex,
 		j.file,
 		out,
 		elapsed,
 	}
+	wg.Done()
 }
 
 type run struct {
-	day      string
-	ex       string
+	day      int
+	ex       int
 	input    string
-	result   string
+	result   int
 	duration time.Duration
 }
 
-func runScheduled() (runs []run) {
-	for _, j := range jobs {
-		runs = append(runs, j.run())
+func runScheduled(parallelMode bool) (runs []run) {
+	ch := make(chan run, len(jobs))
+	wg := sync.WaitGroup{}
+	if parallelMode {
+		fmt.Println("Starting parallel execution")
+	} else {
+		fmt.Println("Starting sequential execution")
 	}
+	for _, j := range jobs {
+		wg.Add(1)
+		if parallelMode {
+			go runJob(j, ch, &wg)
+		} else {
+			runJob(j, ch, &wg)
+		}
+	}
+
+	wg.Wait()
+	close(ch)
+	for r := range ch {
+
+		runs = append(runs, r)
+	}
+	slices.SortFunc(runs, func(a run, b run) int {
+		if a.day < b.day {
+			return -1
+		} else if a.day > b.day {
+			return 1
+		} else if a.ex < b.ex {
+			return -1
+		} else if a.ex > b.ex {
+			return 1
+		}
+		return strings.Compare(a.input, b.input)
+	})
 	return
 }
 
-func schedule(f func(string) string, files []string, day int, ex int) {
+func schedule(f func([]string) int, files []string, day int, ex int) {
 	for _, file := range files {
+		in, err := util.ReadFile(file)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		j := job{
 			f:    f,
 			file: file,
+			in:   in,
 			day:  day,
 			ex:   ex,
 		}

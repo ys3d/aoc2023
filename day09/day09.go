@@ -2,19 +2,13 @@ package day09
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
 )
 
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	sequences := parseGame(in)
 	result := 0
 	for _, s := range sequences {
@@ -22,17 +16,11 @@ func N1(file string) (out string) {
 		result += history[0].numbers[len(history[0].numbers)-1]
 	}
 
-	return strconv.Itoa(result)
+	return result
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
-	// Assumption the path length from the start to Z is equal to the length from Z to Z
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
 	sequences := parseGame(in)
 	result := 0
 	for _, s := range sequences {
@@ -40,7 +28,7 @@ func N2(file string) (out string) {
 		history := rev.complete()
 		result += history[0].numbers[len(history[0].numbers)-1]
 	}
-	return strconv.Itoa(result)
+	return result
 }
 
 type sequence struct {

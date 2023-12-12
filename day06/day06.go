@@ -2,19 +2,13 @@ package day06
 
 import (
 	"daniel/aoc2023/util"
-	"fmt"
 	"math"
 	"strconv"
 	"strings"
 )
 
 // N1 computes the results for Ex1 on the given input-file
-func N1(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N1(in []string) int {
 	races := parseInput(in)
 
 	waysToWin := util.Map(races, func(r race) int { return r.waysToWin() })
@@ -25,16 +19,11 @@ func N1(file string) (out string) {
 		}
 	}
 
-	return strconv.Itoa(value)
+	return value
 }
 
 // N2 computes the results for Ex2 on the given input-file
-func N2(file string) (out string) {
-	in, err := util.ReadFile(file)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func N2(in []string) int {
 	for i := range in {
 		in[i] = strings.Replace(in[i], " ", "", -1)
 		in[i] = strings.Replace(in[i], ":", " ", -1)
@@ -49,7 +38,7 @@ func N2(file string) (out string) {
 		}
 	}
 
-	return strconv.Itoa(value)
+	return value
 }
 
 type race struct {
