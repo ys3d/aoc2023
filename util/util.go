@@ -11,7 +11,7 @@ func ReadFile(path string) (s []string, err error) {
 	if err != nil {
 		return
 	}
-	s = strings.Split(string(dat), "\n")
+	s = strings.Split(strings.TrimSuffix(string(dat), "\n"), "\n")
 	return
 }
 
