@@ -15,6 +15,7 @@ import (
 	"daniel/aoc2023/day11"
 	"daniel/aoc2023/day12"
 	"daniel/aoc2023/day13"
+	"daniel/aoc2023/day14"
 	"daniel/aoc2023/util"
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -91,6 +92,7 @@ func scheduleDays(day int) {
 		scheduleDay11()
 		scheduleDay12()
 		scheduleDay13()
+		scheduleDay14()
 	case 1:
 		scheduleDay1()
 	case 2:
@@ -117,6 +119,8 @@ func scheduleDays(day int) {
 		scheduleDay12()
 	case 13:
 		scheduleDay13()
+	case 14:
+		scheduleDay14()
 	default:
 		fmt.Println("Day does not exist")
 	}
@@ -199,6 +203,12 @@ func scheduleDay13() {
 	f := getFilesIn("day13/")
 	schedule(day13.N1, f, 13, 1)
 	schedule(day13.N2, f, 13, 2)
+}
+
+func scheduleDay14() {
+	f := getFilesIn("day14/")
+	schedule(day14.N1, f, 14, 1)
+	schedule(day14.N2, f, 14, 2)
 }
 
 type job struct {
