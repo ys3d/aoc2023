@@ -16,6 +16,8 @@ import (
 	"daniel/aoc2023/day12"
 	"daniel/aoc2023/day13"
 	"daniel/aoc2023/day14"
+	"daniel/aoc2023/day15"
+	"daniel/aoc2023/day16"
 	"daniel/aoc2023/util"
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -34,10 +36,11 @@ var threadProfile = pprof.Lookup("threadcreate")
 
 func main() {
 	day := readDay()
+	mode := readParallelMode()
 	scheduleDays(day)
 	fmt.Println("Scheduled", len(jobs), "jobs for execution")
 	start := time.Now()
-	printRuns(runScheduled(true))
+	printRuns(runScheduled(mode))
 	elapsed := time.Since(start)
 	fmt.Println("Execution took", elapsed)
 	fmt.Println("Used threads:", threadProfile.Count())
@@ -46,7 +49,7 @@ func main() {
 
 func readDay() (day int) {
 	day = -1
-	if len(os.Args) == 2 {
+	if len(os.Args) >= 2 {
 		v, err := strconv.Atoi(os.Args[1])
 		if err != nil {
 			fmt.Println("Unknown argument", os.Args[1])
@@ -75,6 +78,13 @@ func readDay() (day int) {
 	return
 }
 
+func readParallelMode() bool {
+	if len(os.Args) >= 3 && os.Args[2] == "sequential" {
+		return false
+	}
+	return true
+}
+
 func scheduleDays(day int) {
 	fmt.Println("Scheduling")
 	switch day {
@@ -93,6 +103,8 @@ func scheduleDays(day int) {
 		scheduleDay12()
 		scheduleDay13()
 		scheduleDay14()
+		scheduleDay15()
+		scheduleDay16()
 	case 1:
 		scheduleDay1()
 	case 2:
@@ -121,6 +133,10 @@ func scheduleDays(day int) {
 		scheduleDay13()
 	case 14:
 		scheduleDay14()
+	case 15:
+		scheduleDay15()
+	case 16:
+		scheduleDay16()
 	default:
 		fmt.Println("Day does not exist")
 	}
@@ -209,6 +225,18 @@ func scheduleDay14() {
 	f := getFilesIn("day14/")
 	schedule(day14.N1, f, 14, 1)
 	schedule(day14.N2, f, 14, 2)
+}
+
+func scheduleDay15() {
+	f := getFilesIn("day15/")
+	schedule(day15.N1, f, 15, 1)
+	schedule(day15.N2, f, 15, 2)
+}
+
+func scheduleDay16() {
+	f := getFilesIn("day16/")
+	schedule(day16.N1, f, 16, 1)
+	schedule(day16.N2, f, 16, 2)
 }
 
 type job struct {
