@@ -87,3 +87,19 @@ func ReplaceAtIndex(in string, r rune, i int) string {
 	out[i] = r
 	return string(out)
 }
+
+func Reduce[T any, K any](in []T, initial K, f func(K, T) K) K {
+	k := initial
+	for _, element := range in {
+		k = f(k, element)
+	}
+	return k
+}
+
+const (
+	None  = 0
+	Up    = 1
+	Down  = 2
+	Left  = 3
+	Right = 4
+)
